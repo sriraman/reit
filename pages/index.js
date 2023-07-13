@@ -3,6 +3,19 @@ import styles from '../styles/Home.module.css';
 import React, { useState } from 'react';
 import { NextUIProvider, Table, Container, Card, Text, Badge, Link, Image } from '@nextui-org/react';
 import ReactGA from 'react-ga4';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-1puLjbQCszlVoaJA8IqPNXjMVNg9y1w",
+  authDomain: "reits-vercel.firebaseapp.com",
+  projectId: "reits-vercel",
+  storageBucket: "reits-vercel.appspot.com",
+  messagingSenderId: "87462480753",
+  appId: "1:87462480753:web:e8aa635c3c8deb14cdc4d0",
+  measurementId: "G-WJFCPL6HT5"
+};
+
 
 export default function Home() {
 
@@ -59,6 +72,10 @@ export default function Home() {
     ReactGA.initialize('G-Q5V6YP2Y0C');
 
     ReactGA.send({ hitType: "pageview", page: "/", title: "REITs/InvITs comparison" });
+
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+
   }, []);
 
   return (
