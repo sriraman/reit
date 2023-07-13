@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import React, { useState } from 'react';
 import { NextUIProvider, Table, Container, Card, Text, Badge, Link, Image } from '@nextui-org/react';
+import ReactGA from 'react-ga';
 
 export default function Home() {
 
@@ -50,14 +51,17 @@ export default function Home() {
         const priceData = data.data;
         setPriceData(priceData);
       })
+
+    ReactGA.initialize('G-HQLFK7BPX1');
   }, []);
 
   return (
     <NextUIProvider>
-      <Container css={{ backgroundColor: '#1d2027', maxWidth: '100%', minHeight: '100vh' }}>
+      <Container css={{ backgroundColor: '#1d2027', minWidth: '100vw' }} fluid>
         <Head>
           <title>REITs </title>
           <link rel="icon" href="/favicon.ico" />
+          <meta name="viewport" content="width=450, initial-scale=1.0" />
         </Head>
 
         <Text
@@ -150,7 +154,7 @@ export default function Home() {
               width={300}
               height={300}
               src="./madebysri2.png"
-              css={{ filter: 'invert(96%) sepia(1%) saturate(3131%) hue-rotate(182deg) brightness(86%) contrast(79%)', rotate: '330deg', padding: 60 }}
+              css={{ filter: 'invert(93%) sepia(3%) saturate(427%) hue-rotate(161deg) brightness(84%) contrast(91%)', rotate: '330deg', padding: 60 }}
             />
           
         </Container>
