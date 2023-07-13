@@ -2,7 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import React, { useState } from 'react';
 import { NextUIProvider, Table, Container, Card, Text, Badge, Link, Image } from '@nextui-org/react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 export default function Home() {
 
@@ -56,16 +56,18 @@ export default function Home() {
       })
 
 
-    ReactGA.initialize('G-HQLFK7BPX1');
+    ReactGA.initialize('G-Q5V6YP2Y0C');
+
+    ReactGA.send({ hitType: "pageview", page: "/", title: "REITs/InvITs comparison" });
   }, []);
 
   return (
     <NextUIProvider>
       <Container css={{ backgroundColor: '#1d2027', minWidth: '100vw' }} fluid>
         <Head>
-          <title>REITs </title>
+          <title>REITs/InvITs price in  </title>
           <link rel="icon" href="/favicon.ico" />
-          <meta name="viewport" content="width=450, initial-scale=1.0" />
+          <meta name="viewport" content="width=450" />
         </Head>
 
         <Text
