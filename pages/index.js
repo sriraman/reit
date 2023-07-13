@@ -7,7 +7,8 @@ import ReactGA from 'react-ga';
 export default function Home() {
 
   const [priceData, setPriceData] = useState([]);
-  const scrips = ['EMBASSY','MINDSPACE', 'BIRET', 'NXST', 'PGINVIT','INDIGRID', 'IRBINVIT']
+  const [width, setWidth] = useState(0);
+  const scrips = ['EMBASSY','MINDSPACE', 'BIRET', 'NXST', 'PGINVIT','INDIGRID', 'IRBINVIT'];
   const scripsNAV = {
     'EMBASSY': 394.88,
     'MINDSPACE': 371.9,
@@ -40,6 +41,8 @@ export default function Home() {
 
 
   React.useEffect(() => {
+    setWidth(window.innerWidth);
+
     fetch('https://api.stockmarketapi.in/api/v1/getprices?token=cb4750604bb2a7697c40d1546ef4b02246ba9f2a6976570b0353203ec4474217&nsecode='+scrips.join(","))
       .then((response => {
         if (response.ok) {
@@ -51,6 +54,7 @@ export default function Home() {
         const priceData = data.data;
         setPriceData(priceData);
       })
+
 
     ReactGA.initialize('G-HQLFK7BPX1');
   }, []);
@@ -65,12 +69,11 @@ export default function Home() {
         </Head>
 
         <Text
-          h1
-          size={60}
+          size={(width > 500) ? 60 : 30}
           css={{
             textGradient: "45deg, $blue600 40%, $pink600 60%",
             textAlign: 'center',
-            padding: '80px'
+            padding: (width > 500) ? '80px' : '30px'
           }}
           weight="bold"
         >
