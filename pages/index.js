@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import React, { useState } from 'react';
-import { NextUIProvider, Table, Container, Card, Text, Badge, Link, Image } from '@nextui-org/react';
+import { NextUIProvider, Table, Container, Card, Text, Badge, Link, Image, Loading } from '@nextui-org/react';
 import ReactGA from 'react-ga4';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 export default function Home() {
 
-  const [priceData, setPriceData] = useState([]);
+  const [priceData, setPriceData] = useState(null);
   const [width, setWidth] = useState(0);
   const scrips = ['EMBASSY','MINDSPACE', 'BIRET', 'NXST', 'PGINVIT','INDIGRID', 'IRBINVIT'];
   const scripsNAV = {
@@ -56,7 +56,7 @@ export default function Home() {
   React.useEffect(() => {
     setWidth(window.innerWidth);
 
-    fetch('https://api.stockmarketapi.in/api/v1/getprices?token=cb4750604bb2a7697c40d1546ef4b02246ba9f2a6976570b0353203ec4474217&nsecode='+scrips.join(","))
+    fetch('https://nse-api-three.vercel.app/api/getQuote?api_key=CssgK3JQNenGzU6aDTr6w6g5S&symbols='+scrips.join(","))
       .then((response => {
         if (response.ok) {
           return response.json();
@@ -64,8 +64,17 @@ export default function Home() {
         throw response;
       }))
       .then(data => {
-        const priceData = data.data;
-        setPriceData(priceData);
+        let price = [];
+
+        data.map((d) => {
+          price[d.scrip] = {
+            scrip: d.scrip,
+            ltp: d.price,
+            name: d.name
+          }
+        });
+
+        setPriceData(price);
       })
 
 
@@ -103,7 +112,7 @@ export default function Home() {
 
         <Card variant="flat" css={{ maxWidth: '1200px', margin: 'auto' }}>
           
-          <Table
+          {priceData && <Table
             aria-label="Example table with static content"
             css={{
               height: "auto",
@@ -138,7 +147,9 @@ export default function Home() {
                 })
               }
             </Table.Body>
-          </Table>
+          </Table>}
+
+          {priceData || <Loading css={{ margin: '200px' }} size="xl" />}
         </Card>
 
         <Container css={{ maxWidth: '1200px', margin: 'auto' }}>
